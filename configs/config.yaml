@@ -1,0 +1,52 @@
+data:
+  raw_csv_dir: "dataset/raw_csv"
+  processed_dir: "dataset/processed"
+  ppg_dir: "dataset/processed/ppg_windows"
+  scalogram_dir: "dataset/processed/scalograms"
+  labels_path: "dataset/processed/labels.csv"
+  sampling_rate: 125
+  window_size: 1250       # 10s * 125Hz
+  overlap: 625            # 50% overlap
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+preprocessing:
+  hp_cutoff: 0.5          # Hz
+  hp_order: 2
+  wavelet: "db6"
+  wavelet_level: 4
+  min_std_ppg: 0.05
+  min_std_abp: 5.0
+  min_peaks: 10
+  abp_min: 20
+  abp_max: 200
+  ppg_amp_max: 4.0
+  ppg_mean_min: 0.1
+
+scalogram:
+  scales: 128
+  wavelet: "morl"         # Morlet
+  image_size: 128
+  gamma: 0.6
+
+model:
+  cnn_filters: [32, 64]
+  transformer_filters: 64
+  transformer_kernel: 5
+  num_heads: 4
+  key_dim: 32
+  dense_units: 128
+  dropout_cnn: 0.4
+  dropout_fusion: 0.3
+
+training:
+  batch_size: 32
+  max_epochs: 100
+  lr: 0.0001
+  huber_delta: 5.0
+  early_stop_patience: 10
+  lr_reduce_patience: 5
+  lr_reduce_factor: 0.5
+  seed: 42
+  checkpoint_path: "checkpoints/best_model.pt"
